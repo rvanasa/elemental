@@ -1,0 +1,23 @@
+@keyframes element-scale-in {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes element-wiggle {
+  from {
+    transform: rotate(0);
+  }
+  30% {
+    transform: rotate(5deg);
+  }
+  70% {
+    transform: rotate(-5deg);
+  }
+  to {
+    transform: rotate(0);
+  }
+}
