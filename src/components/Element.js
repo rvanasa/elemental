@@ -8,16 +8,17 @@ import {useDrag, useDrop} from 'react-dnd';
 import {FaFire, FiWind, GiStoneBlock, GiWaterDrop} from 'react-icons/all';
 import useListener from '../hooks/useListener';
 import './Element.scss';
+import SelectionContext from '../contexts/SelectionContext';
+import useRedraw from '../hooks/useRedraw';
 
 const ICONS = [FiWind, GiStoneBlock, FaFire, GiWaterDrop];
 
-export default function Element({element, count, usable, compact, onDrop, onClick}) {
+export default function Element({element, count, compact, onDrop, onClick}) {
 
-    // half = true;
-
-    let redraw = useState()[1];
+    let redraw = useRedraw();
 
     let world = useContext(WorldContext);
+    let {selected, setSelected} = useContext(SelectionContext);
 
     useListener(world, 'element:' + element.id, redraw);
 
@@ -65,18 +66,20 @@ export default function Element({element, count, usable, compact, onDrop, onClic
         boxShadow: '1px 4px #0004',
         textShadow: isDark && '1px 2px #0004',
         overflowWrap: 'break-word',
-        transform: usable && (isDragging || (isDropping && dropRecipe && !dropRecipe.local)) && 'scale(.8)',
+        transform: onDrop && (isDragging || (isDropping && dropRecipe && !dropRecipe.local)) && 'scale(.8)',
         // animation: 'element-wiggle .5s ease-out',
     };
+
+    onClick = onClick || (elem => !elem.primitive && setSelected(/*selected === elem ? null : */elem));////////////
 
     let Icon = ICONS[element.id];
 
     return (
-        <span ref={usable && drop} className="d-inline-block p-1">
-            <span ref={usable && drag}
-                  className={classNames('d-inline-block p-1 text-center noselect', usable && 'grabbable')}
+        <span ref={onDrop && drop} className="d-inline-block p-1">
+            <span ref={onDrop && drag}
+                  className={classNames('d-inline-block p-1 text-center noselect', (onDrop && 'grabbable') || (onClick && 'clickable'))}
                   style={style}
-                  onClick={() => onClick && onClick(element)}>
+                  onClick={e => onClick && (e.stopPropagation() & onClick(element))}>
                 <div className="d-inline-block" style={{height: 40}}>
                     <ScaleText maxFontSize={20} minFontSize={14}>{element.name || '(?)'}</ScaleText>
                 </div>

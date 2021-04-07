@@ -5,11 +5,11 @@ import {Button, Form} from 'react-bootstrap';
 import ColorOption from './ColorOption';
 import {COLORS} from '../services/colors';
 import {sentenceCase} from 'change-case';
+import {cleanupElementName} from '../services/world';
 
 export default function ElementEditor({element: template, onSubmit}) {
 
-    // let [element, setElement] = useState(template);
-    let [name, setName] = useState('');
+    let [name, setName] = useState(String((template.submitted && template.name) || ''));
     let [color, setColor] = useState(template.color);
     let [attempted, setAttempted] = useState(false);
 
@@ -22,12 +22,12 @@ export default function ElementEditor({element: template, onSubmit}) {
 
     let element = {
         ...template,
-        name: sentenceCase(name) || template.name,
+        name: cleanupElementName(name) || template.name || '',
         color,
     };
 
     let error = null;
-    if(!name) {
+    if(!element.name.trim()) {
         error = 'Please enter an element name.';
     }
     else if(element.name.length > 20) {

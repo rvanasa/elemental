@@ -1,21 +1,19 @@
 import React, {useContext, useState} from 'react';
-import UserContext from '../contexts/UserContext';
-import WorldContext from '../contexts/WorldContext';
-import Element from './Element';
+import UserContext from '../../contexts/UserContext';
+import WorldContext from '../../contexts/WorldContext';
+import Element from '../Element';
 import {Container} from 'react-bootstrap';
-import sort from 'fast-sort';
-import Recipe from './Recipe';
-import ElementEditor from './ElementEditor';
-import useListener from '../hooks/useListener';
-import {COLORS} from '../services/colors';
+import Recipe from '../Recipe';
+import ElementEditor from '../ElementEditor';
+import useListener from '../../hooks/useListener';
 
-export default function Game() {
+export default function GamePage() {
 
     let world = useContext(WorldContext);
     let user = useContext(UserContext);
     let [inventory, setInventory] = useState(null);
     let [recipe, setRecipe] = useState(null);
-    let [editing, setEditing] = useState(null);
+    let [suggesting, setSuggesting] = useState(null);
 
     let primitiveElements = world.primitives;
 
@@ -27,8 +25,8 @@ export default function Game() {
     }
 
     function updateInventory() {
-        let inventory = Object.entries(user.getInventory())
-            .map(([id, count]) => {
+        let inventory = Object.keys(user.getInventory())
+            .map(id => {
                 let elem = world.getElement(id);
                 if(!elem) {
                     console.log('Missing element:', id);
@@ -39,7 +37,11 @@ export default function Game() {
             })
             .filter(elem => elem);
 
-        setInventory(sort(inventory).asc([elem => COLORS.indexOf(elem.color) /*Color(elem.color).hue()*/, elem => elem.name]));
+        // sort(inventory).asc([elem => COLORS.indexOf(elem.color) /*Color(elem.color).hue()*/, elem => elem.name]);
+
+        setInventory(inventory);
+
+        // setInventory(user.getInventory());///
     }
 
     function tryCombine(a, b) {
@@ -49,7 +51,7 @@ export default function Game() {
                 recipe = world.addRecipe(a, b);
             }
             if(recipe.local) {
-                setEditing(recipe.child);
+                setSuggesting(recipe.child);
                 return;
             }
 
@@ -66,42 +68,52 @@ export default function Game() {
     }
 
     function onSubmit(elem) {
-        setEditing(null);
+        setSuggesting(null);
         if(elem) {
             elem = world.notifyElement(elem);
             if(elem.recipe) {
                 recipe = world.notifyRecipe(elem.recipe);
                 setRecipe(recipe);
+
+                ///
+                user.removeItem(recipe.parent1);
+                user.removeItem(recipe.parent2);
             }
+
+            user.suggest(elem)
+                .catch(console.error);
+
             // console.log(elem);
             // addItem(elem);
         }
     }
 
-    function onClick(elem) {
-        // console.log(elem);
-        // tryCombine(elem, elem);
-
-        if(elem.recipe) {
-            setRecipe(elem.recipe);
-        }
-    }
+    // function onClick(elem) {
+    //     // console.log(elem);
+    //     // tryCombine(elem, elem);
+    //
+    //     // if(elem.recipe) {
+    //     //     setRecipe(elem.recipe);
+    //     // }
+    //
+    //     user.addItem(elem, 1);
+    // }
 
     function InventoryElement({element, ...props}) {
         return <Element
             element={element}
             {...props}
             usable
-            onClick={onClick}
+            // onClick={onClick}
             onDrop={item => tryCombine(element, item.element)}
         />;
     }
 
     return (
         <>
-            {editing ? (
+            {suggesting ? (
                 <Container fluid="sm">
-                    <ElementEditor element={editing} onSubmit={onSubmit}/>
+                    <ElementEditor element={suggesting} onSubmit={onSubmit}/>
                 </Container>
             ) : (
                 <>
@@ -121,6 +133,7 @@ export default function Game() {
                             ))}
                         </div>
                         <div className="mb-4">
+                            {/*<Element onDrop={elem=>}></Element>*/}
                             {inventory.map((element, i) => (
                                 <InventoryElement
                                     key={element.id + ':' + i}

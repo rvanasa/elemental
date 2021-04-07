@@ -1,4 +1,14 @@
 import EventEmitter from 'events';
+import axios from 'axios';
+import {auth} from '../firebase';
+import {COLORS} from './colors';
+
+const API_URL = process.env.REACT_APP_API_URL || '';
+
+axios.interceptors.request.use(async config => {
+    config.headers.Authorization = 'Bearer ' + await auth.currentUser.getIdToken();
+    return config;
+});
 
 class User extends EventEmitter {
     constructor(storageKey = 'user') {
@@ -8,12 +18,55 @@ class User extends EventEmitter {
         this.data = {
             name: null,
             inventory: {},
-            knownElements: [],
+            knownElementIDs: [],
         };
+
+        this.account = auth.currentUser;
+        auth.onAuthStateChanged((account) => this.setAccount(account));
+
+        this._savePromise = null;
     }
 
-    get name() {
-        return this.data.name;
+    isLoggedIn() {
+        return !!this.account;
+    }
+
+    async findAccountOrLogin() {
+        if(!this.account) {
+            this.account = (await auth.signInAnonymously()).user;
+            console.log('Signed in anonymously');
+        }
+        return this.account;
+    }
+
+    setAccount(account) {
+        this.account = account;
+        this.emit('account', account);
+    }
+
+    hasIdentity() {
+        return this.account && !this.account.isAnonymous;
+    }
+
+    async suggest(element) {
+        if(!element.recipe) {
+            console.warn('Tried to suggest element without recipe');
+            return;
+        }
+
+        console.log(element.submitted ? 'Updating' : 'Adding', 'suggestion:', element);
+        if(element.recipe) {
+            let {recipe} = element;
+            await this.findAccountOrLogin();/////
+            let response = await axios.post(API_URL + '/suggest-element', {
+                parent1: recipe.parent1.id,
+                parent2: recipe.parent2.id,
+                name: element.name,
+                color: COLORS.indexOf(element.color),
+            });
+            console.log(response);///
+            element.submitted = true;
+        }
     }
 
     getName() {
@@ -72,15 +125,19 @@ class User extends EventEmitter {
         else {
             inventory[element.id] += amount;
         }
-        if(!this.data.knownElements.includes(element)) {
-            this.data.knownElements.push(element);
+        if(!this.data.knownElementIDs.includes(element.id)) {
+            this.data.knownElementIDs.push(element.id);
         }
         this.save().catch(console.error);
         return true;
     }
 
-    getKnownElements() {
-        return this.data.knownElements;
+    getKnownElementIDs() {
+        return this.data.knownElementIDs;
+    }
+
+    hasKnownElement(element) {
+        return element && (this.getKnownElementIDs().includes(element.id) || this.hasItem(element));
     }
 
     async load() {
@@ -89,12 +146,28 @@ class User extends EventEmitter {
         if(item) {
             Object.assign(this.data, JSON.parse(item));
         }
+
+        console.log('Loaded:', this.data);
     }
 
     async save() {
         this.emit('save', this);
         if(this.data) {
-            localStorage[this.storageKey] = JSON.stringify(this.data);
+            if(this._savePromise) {
+                this._savePromise = new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        this._savePromise = null;
+                        try {
+                            localStorage[this.storageKey] = JSON.stringify(this.data);
+                            resolve();
+                        }
+                        catch(e) {
+                            reject(e);
+                        }
+                    });
+                });
+            }
+            return this._savePromise;
         }
     }
 }

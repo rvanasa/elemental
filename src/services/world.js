@@ -1,5 +1,5 @@
 import EventEmitter from 'events';
-import {sentenceCase} from 'change-case';
+import {capitalCase} from 'change-case';
 import {v4 as uuidv4} from 'uuid';
 import {COLORS} from './colors';
 
@@ -125,7 +125,7 @@ export async function findWorld() {
 
         es.forEach(e => {
             e.id = String(e.id);
-            e.name = sentenceCase(e.name) || `(Element ${e.id})`;
+            e.name = cleanupElementName(e.name) || `(Element #${e.id})`;
             e.color = COLORS[e.color];
             e.primitive = e.id < 4;
             world.notifyElement(e);
@@ -149,4 +149,8 @@ export async function findWorld() {
         });
     }
     return world;
+}
+
+export function cleanupElementName(name) {
+    return capitalCase(name.replace(/[']/, ''));
 }

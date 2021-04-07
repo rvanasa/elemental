@@ -11,7 +11,7 @@ export default function ColorOption({color, active, onSelect}) {
     };
 
     return (
-        <div className="d-inline-block clickable p-1" onClick={() => onSelect(color)}>
+        <div className="d-inline-block clickable p-1" onClick={e => e.preventDefault() & onSelect(color)}>
             <div className="d-inline-block rounded-sm" style={style}/>
         </div>
     );
