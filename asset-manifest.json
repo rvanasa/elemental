@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "https://rvanasa.github.io/elemental-x/static/css/main.39ed13e4.chunk.css",
+    "main.js": "https://rvanasa.github.io/elemental-x/static/js/main.9b82567f.chunk.js",
+    "main.js.map": "https://rvanasa.github.io/elemental-x/static/js/main.9b82567f.chunk.js.map",
+    "runtime-main.js": "https://rvanasa.github.io/elemental-x/static/js/runtime-main.0ab33f13.js",
+    "runtime-main.js.map": "https://rvanasa.github.io/elemental-x/static/js/runtime-main.0ab33f13.js.map",
+    "static/js/2.eab7f9f1.chunk.js": "https://rvanasa.github.io/elemental-x/static/js/2.eab7f9f1.chunk.js",
+    "static/js/2.eab7f9f1.chunk.js.map": "https://rvanasa.github.io/elemental-x/static/js/2.eab7f9f1.chunk.js.map",
+    "index.html": "https://rvanasa.github.io/elemental-x/index.html",
+    "precache-manifest.1da854df1d0f6fc0b2217f0d22d9e6a5.js": "https://rvanasa.github.io/elemental-x/precache-manifest.1da854df1d0f6fc0b2217f0d22d9e6a5.js",
+    "service-worker.js": "https://rvanasa.github.io/elemental-x/service-worker.js",
+    "static/css/main.39ed13e4.chunk.css.map": "https://rvanasa.github.io/elemental-x/static/css/main.39ed13e4.chunk.css.map",
+    "static/js/2.eab7f9f1.chunk.js.LICENSE.txt": "https://rvanasa.github.io/elemental-x/static/js/2.eab7f9f1.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0ab33f13.js",
+    "static/js/2.eab7f9f1.chunk.js",
+    "static/css/main.39ed13e4.chunk.css",
+    "static/js/main.9b82567f.chunk.js"
+  ]
+}
