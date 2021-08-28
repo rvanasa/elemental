@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "https://rvanasa.github.io/elemental-x/precache-manifest.bc90362531b32f6f62fb38fcaaf0e82b.js"
+  "https://rvanasa.github.io/elemental-x/precache-manifest.15e263bb2e32bf802c7abb317d9f3392.js"
 );
 
 self.addEventListener('message', (event) => {

@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e1a48a0d2a6b93dac75052e562e45bda",
+    "revision": "e55643f3a7436d98f175ad6273d054aa",
     "url": "https://rvanasa.github.io/elemental-x/index.html"
   },
   {
-    "revision": "3bf74bf317a68a270d2d",
+    "revision": "263d62932eba27afd2fe",
     "url": "https://rvanasa.github.io/elemental-x/static/css/main.39ed13e4.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "https://rvanasa.github.io/elemental-x/static/js/2.5cece501.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "3bf74bf317a68a270d2d",
-    "url": "https://rvanasa.github.io/elemental-x/static/js/main.1e73e3d3.chunk.js"
+    "revision": "263d62932eba27afd2fe",
+    "url": "https://rvanasa.github.io/elemental-x/static/js/main.c5c71c4a.chunk.js"
   },
   {
     "revision": "536cad3ca0ff293a37d4",

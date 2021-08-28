@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "https://rvanasa.github.io/elemental-x/static/css/main.39ed13e4.chunk.css",
-    "main.js": "https://rvanasa.github.io/elemental-x/static/js/main.1e73e3d3.chunk.js",
-    "main.js.map": "https://rvanasa.github.io/elemental-x/static/js/main.1e73e3d3.chunk.js.map",
+    "main.js": "https://rvanasa.github.io/elemental-x/static/js/main.c5c71c4a.chunk.js",
+    "main.js.map": "https://rvanasa.github.io/elemental-x/static/js/main.c5c71c4a.chunk.js.map",
     "runtime-main.js": "https://rvanasa.github.io/elemental-x/static/js/runtime-main.0ab33f13.js",
     "runtime-main.js.map": "https://rvanasa.github.io/elemental-x/static/js/runtime-main.0ab33f13.js.map",
     "static/js/2.5cece501.chunk.js": "https://rvanasa.github.io/elemental-x/static/js/2.5cece501.chunk.js",
     "static/js/2.5cece501.chunk.js.map": "https://rvanasa.github.io/elemental-x/static/js/2.5cece501.chunk.js.map",
     "index.html": "https://rvanasa.github.io/elemental-x/index.html",
-    "precache-manifest.bc90362531b32f6f62fb38fcaaf0e82b.js": "https://rvanasa.github.io/elemental-x/precache-manifest.bc90362531b32f6f62fb38fcaaf0e82b.js",
+    "precache-manifest.15e263bb2e32bf802c7abb317d9f3392.js": "https://rvanasa.github.io/elemental-x/precache-manifest.15e263bb2e32bf802c7abb317d9f3392.js",
     "service-worker.js": "https://rvanasa.github.io/elemental-x/service-worker.js",
     "static/css/main.39ed13e4.chunk.css.map": "https://rvanasa.github.io/elemental-x/static/css/main.39ed13e4.chunk.css.map",
     "static/js/2.5cece501.chunk.js.LICENSE.txt": "https://rvanasa.github.io/elemental-x/static/js/2.5cece501.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.0ab33f13.js",
     "static/js/2.5cece501.chunk.js",
     "static/css/main.39ed13e4.chunk.css",
-    "static/js/main.1e73e3d3.chunk.js"
+    "static/js/main.c5c71c4a.chunk.js"
   ]
 }
