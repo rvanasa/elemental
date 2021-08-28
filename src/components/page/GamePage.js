@@ -2,10 +2,21 @@ import React, {useContext, useState} from 'react';
 import UserContext from '../../contexts/UserContext';
 import WorldContext from '../../contexts/WorldContext';
 import Element from '../Element';
-import {Container} from 'react-bootstrap';
+import {Button, Container} from 'react-bootstrap';
 import Recipe from '../Recipe';
 import ElementEditor from '../ElementEditor';
 import useListener from '../../hooks/useListener';
+import HistoryPage from './HistoryPage';
+import {
+    BiArrowBack,
+    BiChevronLeft,
+    FaBackward,
+    FaCaretRight, FaHistory,
+    FaPause,
+    FaShoppingBag,
+    FaTh, FaTimes,
+    HiLibrary
+} from 'react-icons/all';
 
 export default function GamePage() {
 
@@ -14,6 +25,7 @@ export default function GamePage() {
     let [inventory, setInventory] = useState(null);
     let [recipe, setRecipe] = useState(null);
     let [suggesting, setSuggesting] = useState(null);
+    let [showingHistory, setShowingHistory] = useState(false);
 
     let primitiveElements = world.primitives;
 
@@ -118,31 +130,43 @@ export default function GamePage() {
             ) : (
                 <>
                     <div className="mb-4" style={{background: '#0005'}}>
-                        <Container fluid="sm" style={{height: '4em'}}>
-                            {recipe && (
-                                <>
-                                    <Recipe recipe={recipe} compact/>
-                                </>
+                        <div className="float-right mt-1 mr-2">
+                            <Button variant="primary" size="lg" className="py-2"
+                                    onClick={() => setShowingHistory(!showingHistory)}>
+                                {showingHistory ? <FaTimes/> : <FaHistory/>}
+                            </Button>
+                        </div>
+                        <Container fluid="sm" style={{height: '4em', paddingTop: '.125em'}}>
+                            {recipe ? (
+                                <Recipe recipe={recipe} compact/>
+                            ) : (
+                                <h1 className="cursor-default text-dark text-uppercase" style={{paddingTop: '.0625em'}}>
+                                    Elemental X
+                                </h1>
                             )}
                         </Container>
                     </div>
-                    <Container fluid="sm">
-                        <div className="mb-4">
-                            {primitiveElements.map(element => (
-                                <InventoryElement key={element.id} element={element}/>
-                            ))}
-                        </div>
-                        <div className="mb-4">
-                            {/*<Element onDrop={elem=>}></Element>*/}
-                            {inventory.map((element, i) => (
-                                <InventoryElement
-                                    key={element.id + ':' + i}
-                                    element={element}
-                                    count={user.getItemCount(element)}
-                                />
-                            ))}
-                        </div>
-                    </Container>
+                    {showingHistory ? (
+                        <HistoryPage/>
+                    ) : (
+                        <Container fluid="sm">
+                            <div className="mb-4">
+                                {primitiveElements.map(element => (
+                                    <InventoryElement key={element.id} element={element}/>
+                                ))}
+                            </div>
+                            <div className="mb-4">
+                                {/*<Element onDrop={elem=>}></Element>*/}
+                                {inventory.map((element, i) => (
+                                    <InventoryElement
+                                        key={element.id + ':' + i}
+                                        element={element}
+                                        count={user.getItemCount(element)}
+                                    />
+                                ))}
+                            </div>
+                        </Container>
+                    )}
                 </>
             )}
         </>

@@ -7,7 +7,7 @@ import Loading from './Loading';
 import UserContext from '../contexts/UserContext';
 import {findUser} from '../services/user';
 import {DndProvider} from 'react-dnd-multi-backend';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {HashRouter, Route, Switch} from 'react-router-dom';
 import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
 import GamePage from './page/GamePage';
 import LoginPage from './page/LoginPage';
@@ -46,50 +46,48 @@ export default function App() {
     // }
 
     return (
-        <>
+        <HashRouter>
             <DndProvider options={HTML5toTouch}>
-                <BrowserRouter>
-                    {/*<div className="d-flex justify-content-around">*/}
-                    {/*    <NavButton to="/">*/}
-                    {/*        <FaTh/>*/}
-                    {/*    </NavButton>*/}
-                    {/*    <NavButton to="/history">*/}
-                    {/*        <FaHistory/>*/}
-                    {/*    </NavButton>*/}
-                    {/*    <NavButton to="/suggestions">*/}
-                    {/*        <FaPen/>*/}
-                    {/*    </NavButton>*/}
-                    {/*    <NavButton to="/user">*/}
-                    {/*        <FaUser/>*/}
-                    {/*    </NavButton>*/}
-                    {/*</div>*/}
-                    <WorldContext.Provider value={world}>
-                        <UserContext.Provider value={user}>
-                            <SelectionContext.Provider value={{selected, setSelected}}>
-                                {selected && (
-                                    <div className="position-fixed w-100"
-                                         style={{background: '#222', boxShadow: '0 .25em #0008', zIndex: 100}}>
-                                        <ElementDetail element={selected} onClose={() => setSelected(null)}/>
-                                    </div>
-                                )}
-                                <div onClick={() => setSelected(null)}>
-                                    <Switch>
-                                        <Route path="/login">
-                                            <LoginPage/>
-                                        </Route>
-                                        <Route path="/history">
-                                            <HistoryPage/>
-                                        </Route>
-                                        <Route path="/">
-                                            <GamePage/>
-                                        </Route>
-                                    </Switch>
+                {/*<div className="d-flex justify-content-around">*/}
+                {/*    <NavButton to="/">*/}
+                {/*        <FaTh/>*/}
+                {/*    </NavButton>*/}
+                {/*    <NavButton to="/history">*/}
+                {/*        <FaHistory/>*/}
+                {/*    </NavButton>*/}
+                {/*    <NavButton to="/suggestions">*/}
+                {/*        <FaPen/>*/}
+                {/*    </NavButton>*/}
+                {/*    <NavButton to="/user">*/}
+                {/*        <FaUser/>*/}
+                {/*    </NavButton>*/}
+                {/*</div>*/}
+                <WorldContext.Provider value={world}>
+                    <UserContext.Provider value={user}>
+                        <SelectionContext.Provider value={{selected, setSelected}}>
+                            {selected && (
+                                <div className="position-fixed w-100"
+                                     style={{background: '#222', boxShadow: '0 .25em #0008', zIndex: 100}}>
+                                    <ElementDetail element={selected} onClose={() => setSelected(null)}/>
                                 </div>
-                            </SelectionContext.Provider>
-                        </UserContext.Provider>
-                    </WorldContext.Provider>
-                </BrowserRouter>
+                            )}
+                            <div onClick={() => setSelected(null)}>
+                                <Switch>
+                                    <Route path="/login">
+                                        <LoginPage/>
+                                    </Route>
+                                    <Route path="/history">
+                                        <HistoryPage/>
+                                    </Route>
+                                    <Route path="/">
+                                        <GamePage/>
+                                    </Route>
+                                </Switch>
+                            </div>
+                        </SelectionContext.Provider>
+                    </UserContext.Provider>
+                </WorldContext.Provider>
             </DndProvider>
-        </>
+        </HashRouter>
     );
 };
