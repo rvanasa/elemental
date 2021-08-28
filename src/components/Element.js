@@ -35,9 +35,9 @@ export default function Element({element, count, compact, onDrop, onClick}) {
     let [{isDropping, dropRecipe/*, dropItem*/}, drop] = useDrop({
         accept: ['ELEMENT'],
         canDrop(item) {
-            // if(!world.getRecipe(element, item.element)) {
-            //     return false;
-            // }
+            if(!world.getRecipe(element, item.element)) {
+                return false;
+            }
             return !element.local && !item.element.local;
         },
         drop(item) {

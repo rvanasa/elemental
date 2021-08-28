@@ -4,7 +4,6 @@ import Recipe from './Recipe';
 import {Button, Form} from 'react-bootstrap';
 import ColorOption from './ColorOption';
 import {COLORS} from '../services/colors';
-import {sentenceCase} from 'change-case';
 import {cleanupElementName} from '../services/world';
 
 export default function ElementEditor({element: template, onSubmit}) {
