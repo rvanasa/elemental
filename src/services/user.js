@@ -153,7 +153,7 @@ class User extends EventEmitter {
     async save() {
         this.emit('save', this);
         if(this.data) {
-            if(this._savePromise) {
+            if(!this._savePromise) {
                 this._savePromise = new Promise((resolve, reject) => {
                     setTimeout(() => {
                         this._savePromise = null;

@@ -117,8 +117,8 @@ let world = null;
 export async function findWorld() {
     if(!world) {
         let [es, rs] = await Promise.all([
-            await fetch('/data/Elements.json').then(res => res.json()),
-            await fetch('/data/Recipes.json').then(res => res.json()),
+            await fetch(process.env.PUBLIC_URL + '/data/Elements.json').then(res => res.json()),
+            await fetch(process.env.PUBLIC_URL + '/data/Recipes.json').then(res => res.json()),
         ]);
 
         world = new World();
