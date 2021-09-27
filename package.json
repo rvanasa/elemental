@@ -38,7 +38,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "deploy": "set PUBLIC_URL=https://rvanasa.github.io/elemental-x&& npm run build && gh-pages -d build",
+    "deploy": "set PUBLIC_URL=https://www.ryanvandersmith.com/elemental-x&& npm run build && gh-pages -d build",
     "__deploy": "firebase deploy",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
